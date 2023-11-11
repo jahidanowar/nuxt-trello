@@ -27,7 +27,7 @@ const formState = ref({
         />
       </UFormGroup>
       <UFormGroup>
-        <UButton type="submit" color="primary"> Sign In </UButton>
+        <UButton type="submit" color="primary" block> Sign In </UButton>
       </UFormGroup>
     </UForm>
   </WrapperAuth>

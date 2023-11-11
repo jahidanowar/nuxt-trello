@@ -6,7 +6,7 @@ defineProps({
 });
 </script>
 <template>
-  <div class="grid lg:grid-cols-2 h-screen">
+  <div class="grid lg:grid-cols-2 h-screen bg-gray-100">
     <div class="left place-self-center w-full px-16 lg:px-32">
       <div class="header text-center mb-6">
         <div class="flex justify-center my-4"><Logo /></div>
@@ -23,7 +23,7 @@ defineProps({
 
 <style>
 .right {
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background: linear-gradient(-45deg, #22c55e, #10b981, #84cc16, #23d5ab);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }
