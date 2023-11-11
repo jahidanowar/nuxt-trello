@@ -4,6 +4,22 @@ const formState = ref({
   email: "",
   password: "",
 });
+
+const isLoading = ref(false);
+
+async function handleSubmit() {
+  try {
+    isLoading.value = true;
+    await useFetch("/api/auth/signup", {
+      method: "POST",
+      body: formState.value,
+    });
+  } catch (error) {
+    console.log(error);
+  } finally {
+    isLoading.value = false;
+  }
+}
 </script>
 <template>
   <WrapperAuth title="Create an account for free">
@@ -12,7 +28,7 @@ const formState = ref({
       <NuxtLink to="/auth/signin" class="text-primary-500"> Sign In </NuxtLink>
     </template>
 
-    <UForm :state="formState">
+    <UForm :state="formState" @submit="handleSubmit">
       <UFormGroup class="mb-4" name="name" label="Name">
         <UInput v-model="formState.name" type="text" placeholder="John Doe" />
       </UFormGroup>
@@ -32,7 +48,9 @@ const formState = ref({
         />
       </UFormGroup>
       <UFormGroup>
-        <UButton type="submit" color="primary" block> Sign Up </UButton>
+        <UButton :loading="isLoading" type="submit" color="primary" block>
+          Sign Up
+        </UButton>
       </UFormGroup>
     </UForm>
   </WrapperAuth>

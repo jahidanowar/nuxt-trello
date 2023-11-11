@@ -4,7 +4,7 @@ definePageMeta({
 });
 </script>
 <template>
-  <div></div>
+  <div>Dashboard</div>
 </template>
 
 <style></style>

@@ -1,5 +1,6 @@
 import { NuxtAuthHandler } from "#auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { User } from "~/server/models/User";
 
 export default NuxtAuthHandler({
   secret: process.env.AUTH_SECRET,
@@ -13,9 +14,9 @@ export default NuxtAuthHandler({
       origin: process.env.AUTH_ORIGIN,
 
       credentials: {
-        username: {
-          label: "Username",
-          type: "text",
+        email: {
+          label: "email",
+          type: "email",
           placeholder: "(hint: jsmith)",
         },
         password: {
@@ -24,8 +25,22 @@ export default NuxtAuthHandler({
           placeholder: "(hint: hunter2)",
         },
       },
-      async authorize(credential: { username: string; password: string }) {
+      async authorize(credential: { email: string; password: string }) {
         // Authorize the user
+
+        const user = await User.findOne({ email: credential.email });
+
+        if (!user) {
+          return null;
+        }
+
+        const isValid = await user.comparePassword(credential.password);
+
+        if (!isValid) {
+          return null;
+        }
+
+        return user;
       },
     }),
   ],

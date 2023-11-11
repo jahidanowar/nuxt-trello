@@ -9,4 +9,7 @@ export default defineNuxtConfig({
     },
   },
   ui: {},
+  nuxtServerUtils: {
+    mongodbUri: process.env.NEXTAUTH_URL,
+  },
 });
