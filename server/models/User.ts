@@ -6,6 +6,13 @@ export interface User extends Document {
   name: string;
   email: string;
   password: string;
+  stripeCustomerId?: string;
+  subscription: {
+    subscriptionId: string;
+    subscriptionStatus: string;
+    subscribedPriceId: string;
+  };
+
   comparePassword: (password: string) => Promise<boolean>;
 }
 

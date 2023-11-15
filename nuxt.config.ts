@@ -8,6 +8,9 @@ export default defineNuxtConfig({
       type: "authjs",
     },
   },
+  colorMode: {
+    preference: "light",
+  },
   ui: {},
   nuxtServerUtils: {
     mongodbUri: process.env.NEXTAUTH_URL,

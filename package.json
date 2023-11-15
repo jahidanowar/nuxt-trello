@@ -23,8 +23,10 @@
     "vue-router": "^4.2.5"
   },
   "dependencies": {
+    "@stripe/stripe-js": "^2.1.11",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
-    "next-auth": "4.21.1"
+    "next-auth": "4.21.1",
+    "stripe": "^14.4.0"
   }
 }
