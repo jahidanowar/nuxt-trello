@@ -1,8 +1,10 @@
 import { Schema, model } from "mongoose";
+import type { Document } from "mongoose";
+import { ListDocument } from "./List";
 
 export interface BoardDocument extends Document {
   name: string;
-  lists: string[];
+  lists: string[] | ListDocument[];
   owner: string;
   coverImage: string;
 }

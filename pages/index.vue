@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-import type { FormSubmitEvent } from "@nuxt/ui/dist/runtime/types";
-import type { z } from "h3-zod";
-import BoardSchema from "~/schemas/Board.schema";
+import type { BoardDocument } from "~/server/models/Board";
 
 definePageMeta({
   middleware: "auth",
@@ -9,31 +7,10 @@ definePageMeta({
 
 const showCreateBoard = ref(false);
 
-const { data, error, refresh } = useFetch("/api/boards");
+const { data, error, refresh } = await useFetch<BoardDocument[]>("/api/boards");
 
 if (error.value) {
   throw createError(error.value);
-}
-
-const formState = reactive({
-  name: undefined,
-  description: undefined,
-  coverImage: undefined,
-});
-
-async function handleSubmit(
-  event: FormSubmitEvent<z.output<typeof BoardSchema>>
-) {
-  try {
-    await useFetch("/api/boards", {
-      method: "POST",
-      body: event.data,
-    });
-
-    refresh();
-
-    showCreateBoard.value = false;
-  } catch (e) {}
 }
 </script>
 <template>
@@ -59,36 +36,49 @@ async function handleSubmit(
           @click="showCreateBoard = false"
         />
       </div>
-
-      <UForm
-        :state="formState"
-        :schema="BoardSchema"
-        class="p-4"
-        @submit="handleSubmit"
-      >
-        <UFormGroup class="mb-4" name="name" label="Board Name">
-          <UInput
-            v-model="formState.name"
-            type="text"
-            placeholder="Board name"
-          />
-        </UFormGroup>
-        <UFormGroup class="mb-4" name="description" label="Description">
-          <UTextarea
-            v-model="formState.description"
-            placeholder="Board description"
-          />
-        </UFormGroup>
-
-        <UFormGroup class="mb-4" name="coverImage"> </UFormGroup>
-
-        <UButton type="submit" color="primary" block> Create board </UButton>
-      </UForm>
+      <FormBoard
+        type="create"
+        :on-create="
+          () => {
+            showCreateBoard = false;
+            refresh();
+          }
+        "
+        :on-update="
+          () => {
+            showCreateBoard = false;
+            refresh();
+          }
+        "
+      />
     </USlideover>
     <!-- ./ Sidesheet  -->
 
     <!-- List of boards -->
-    <section>{{ data }}</section>
+    <section class="grid grid-cols-2 lg:grid-cols-5 my-4 gap-4">
+      <div
+        v-for="board in data"
+        :key="board._id"
+        class="bg-white shadow dark:bg-gray-800 rounded-lg overflow-hidden"
+      >
+        <div v-if="board.coverImage" class="h-36 w-full relative">
+          <NuxtImg
+            :src="board.coverImage"
+            :alt="board.name"
+            class="h-full w-full absolute object-cover"
+          />
+        </div>
+
+        <NuxtLink
+          :to="{
+            name: 'boardId',
+            params: { boardId: board._id },
+          }"
+          class="py-2 px-4 block text-sm"
+          >{{ board.name }}</NuxtLink
+        >
+      </div>
+    </section>
     <!-- ./ List of boards -->
   </WrapperDefault>
 </template>

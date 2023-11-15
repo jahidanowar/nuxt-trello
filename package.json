@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
+    "@nuxt/image": "^1.0.0",
     "@nuxt/ui": "^2.10.0",
     "@sidebase/nuxt-auth": "0.6.0-rc.1",
     "@types/bcryptjs": "^2.4.6",
@@ -27,6 +28,7 @@
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "next-auth": "4.21.1",
-    "stripe": "^14.4.0"
+    "stripe": "^14.4.0",
+    "vuedraggable": "^4.1.0"
   }
 }
