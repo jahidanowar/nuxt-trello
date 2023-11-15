@@ -15,6 +15,7 @@ const porps = withDefaults(defineProps<Props>(), {
   type: "create",
 });
 
+const isLoading = ref(false);
 const formState = reactive<Partial<BoardDocument>>({
   name: undefined,
   coverImage: undefined,
@@ -24,6 +25,7 @@ async function handleSubmit(
   event: FormSubmitEvent<z.output<typeof BoardSchema>>
 ) {
   try {
+    isLoading.value = true;
     if (porps.type === "update" && porps.initialData?._id) {
       const updatedBoard = await useFetch(
         `/api/boards/${porps.initialData._id}`,
@@ -43,7 +45,10 @@ async function handleSubmit(
       watch: false,
     });
     porps.onCreate?.(newBoard);
-  } catch (e) {}
+  } catch (e) {
+  } finally {
+    isLoading.value = false;
+  }
 }
 
 watchEffect(() => {
@@ -64,11 +69,13 @@ watchEffect(() => {
       <UInput v-model="formState.name" type="text" placeholder="Board name" />
     </UFormGroup>
 
-    <UFormGroup class="mb-4" name="coverImage">
+    <UFormGroup class="mb-4" name="coverImage" label="Select cover image">
       <ImagePicker v-model="formState.coverImage" />
     </UFormGroup>
 
-    <UButton type="submit" color="primary" block> Create board </UButton>
+    <UButton type="submit" color="primary" block :loading="isLoading">
+      Create board
+    </UButton>
   </UForm>
 </template>
 

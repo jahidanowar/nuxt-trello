@@ -5,12 +5,23 @@ definePageMeta({
   middleware: "auth",
 });
 
+useHead({
+  title: "Boards",
+});
+
 const showCreateBoard = ref(false);
+const selectedBoard = ref<BoardDocument | undefined>();
 
 const { data, error, refresh } = await useFetch<BoardDocument[]>("/api/boards");
+provide("refresh-boards", refresh);
 
 if (error.value) {
   throw createError(error.value);
+}
+
+async function handleEdit(board: BoardDocument) {
+  selectedBoard.value = board;
+  showCreateBoard.value = true;
 }
 </script>
 <template>
@@ -25,19 +36,14 @@ if (error.value) {
 
     <!-- Sidesheet  -->
     <USlideover v-model="showCreateBoard">
-      <div
-        class="py-2 px-4 flex justify-between items-center border-b dark:border-gray-800"
-      >
-        <h3 class="font-semibold">Create board</h3>
-        <UButton
-          color="gray"
-          variant="ghost"
-          icon="i-heroicons-x-mark-20-solid"
-          @click="showCreateBoard = false"
-        />
-      </div>
+      <SlideoverHeader
+        title="Create board"
+        :on-click="() => (showCreateBoard = false)"
+      ></SlideoverHeader>
+
       <FormBoard
-        type="create"
+        :type="selectedBoard ? 'update' : 'create'"
+        :initial-data="selectedBoard"
         :on-create="
           () => {
             showCreateBoard = false;
@@ -47,6 +53,7 @@ if (error.value) {
         :on-update="
           () => {
             showCreateBoard = false;
+            selectedBoard = undefined;
             refresh();
           }
         "
@@ -56,28 +63,12 @@ if (error.value) {
 
     <!-- List of boards -->
     <section class="grid grid-cols-2 lg:grid-cols-5 my-4 gap-4">
-      <div
+      <BoardCard
         v-for="board in data"
         :key="board._id"
-        class="bg-white shadow dark:bg-gray-800 rounded-lg overflow-hidden"
-      >
-        <div v-if="board.coverImage" class="h-36 w-full relative">
-          <NuxtImg
-            :src="board.coverImage"
-            :alt="board.name"
-            class="h-full w-full absolute object-cover"
-          />
-        </div>
-
-        <NuxtLink
-          :to="{
-            name: 'boardId',
-            params: { boardId: board._id },
-          }"
-          class="py-2 px-4 block text-sm"
-          >{{ board.name }}</NuxtLink
-        >
-      </div>
+        :board="board"
+        :on-edit="handleEdit"
+      ></BoardCard>
     </section>
     <!-- ./ List of boards -->
   </WrapperDefault>

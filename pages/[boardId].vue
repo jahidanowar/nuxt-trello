@@ -7,32 +7,27 @@ definePageMeta({
 });
 
 const { boardId } = useRoute().params;
+const showCreateList = ref(false);
 
 const { data, refresh } = await useFetch<BoardDocument>(
   `/api/boards/${boardId}`
 );
 
-if (!data) {
+provide("refresh-board", refresh);
+
+if (!data.value) {
   throw createError({
     statusCode: 404,
     message: "Board not found",
   });
 }
 
+useHead({
+  title: data.value.name,
+});
+
 const coverImage = computed(() => data.value?.coverImage || "");
 const lists = computed(() => data.value?.lists as ListDocument[]);
-
-async function handleFormSubmit() {
-  await useFetch("/api/lists", {
-    method: "POST",
-    body: {
-      name: "Best list",
-      board: data.value?._id,
-    },
-  });
-
-  refresh();
-}
 </script>
 <template>
   <WrapperDefault
@@ -45,12 +40,37 @@ async function handleFormSubmit() {
     }"
   >
     <template #actions>
-      <UButton @click="handleFormSubmit">Create a list</UButton>
+      <UButton @click="showCreateList = true" size="xs">Create a list</UButton>
     </template>
 
     <h1 class="tex-3xl font-semibold mb-4">{{ data!.name }}</h1>
 
     <ListContainer :lists="lists" :board-id="(boardId as string)" />
+
+    <USlideover v-model="showCreateList">
+      <SlideoverHeader
+        title="Create list"
+        :on-click="() => (showCreateList = false)"
+      ></SlideoverHeader>
+
+      <FormList
+        type="create"
+        :board-id="(boardId as string)"
+        :on-create="
+          () => {
+            refresh();
+            showCreateList = false;
+          }
+        "
+        :on-update="
+          () => {
+            refresh();
+            showCreateList = false;
+          }
+        "
+        class="p-4"
+      />
+    </USlideover>
   </WrapperDefault>
 </template>
 

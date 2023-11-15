@@ -3,6 +3,10 @@ import type { FormSubmitEvent } from "@nuxt/ui/dist/runtime/types";
 import type { z } from "h3-zod";
 import SignupSchema from "~/schemas/Signup.schema";
 
+useHead({
+  title: "Signup",
+});
+
 const formState = ref({
   name: undefined,
   email: undefined,

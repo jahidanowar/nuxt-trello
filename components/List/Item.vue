@@ -1,9 +1,13 @@
 <script lang="ts" setup>
 import type { ListDocument } from "~/server/models/List";
 
-defineProps<{
+const props = defineProps<{
   element: ListDocument;
+  boardId: string;
 }>();
+
+const { destroy } = useList();
+const refreshBoard = inject("refresh-board") as () => void;
 
 const listActions = ref([
   [
@@ -15,7 +19,9 @@ const listActions = ref([
     {
       label: "Delete list",
       icon: "i-heroicons-trash",
-      click: () => {},
+      click: () => {
+        destroy(props.element._id, refreshBoard);
+      },
     },
   ],
 ]);
@@ -48,7 +54,7 @@ watchEffect(() => {});
     <!-- ./ List Header  -->
 
     <!-- List Body  -->
-    <div class="list-body px-1 py-2 space-y-2 flex-1 overflow-y-auto">
+    <div class="list-body p-2 space-y-2 flex-1 overflow-y-auto">
       <div
         v-for="i in 10"
         class="card p-2 rounded-lg shadow-sm text-sm dark:bg-gray-900 dark:border-gray-700 border"

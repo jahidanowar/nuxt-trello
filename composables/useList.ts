@@ -1,9 +1,9 @@
-export const useBoard = () => {
+export const useList = () => {
   async function destroy(id: string, onDestroy?: () => void) {
     try {
       useToast().add({
-        title: "Delete board",
-        description: "Are you sure you want to delete this board?",
+        title: "Delete list",
+        description: "Are you sure you want to delete this list?",
         actions: [
           {
             label: "Canel",
@@ -13,7 +13,7 @@ export const useBoard = () => {
             label: "Yes",
             color: "red",
             click: async () => {
-              await useFetch(`/api/boards/${id}`, {
+              await useFetch(`/api/lists/${id}`, {
                 method: "DELETE",
               });
               onDestroy?.();

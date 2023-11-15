@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 import { useSignin } from "~/composables/useSignin";
 
+useHead({
+  title: "Signin",
+});
+
 const { formState, isLoading, validationSchema, handleSubmit } = useSignin();
 </script>
 <template>
