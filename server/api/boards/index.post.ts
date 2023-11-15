@@ -7,17 +7,11 @@ export default defineEventHandler(async (event) => {
   const body = await readBody(event);
   Validator.validateSchema(BoardSchema, body);
 
-  const session = await getServerSession(event);
-  if (!session) {
-    throw createError({
-      statusCode: 401,
-      message: "Unauthorized",
-    });
-  }
+  const user = await event.context.user;
 
   const board = await Board.create({
     ...body,
-    owner: (session.user as any)._id,
+    owner: user._id,
   });
 
   return board;

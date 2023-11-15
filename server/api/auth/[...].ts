@@ -27,7 +27,7 @@ export default NuxtAuthHandler({
           return null;
         }
 
-        return user;
+        return user.toJSON();
       },
     }),
   ],
