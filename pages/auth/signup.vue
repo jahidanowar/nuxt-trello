@@ -1,18 +1,33 @@
 <script lang="ts" setup>
+import type { FormSubmitEvent } from "@nuxt/ui/dist/runtime/types";
+import type { z } from "h3-zod";
+import SignupSchema from "~/schemas/Signup.schema";
+
 const formState = ref({
-  name: "",
-  email: "",
-  password: "",
+  name: undefined,
+  email: undefined,
+  password: undefined,
+  passwordConfirm: undefined,
 });
 
 const isLoading = ref(false);
 
-async function handleSubmit() {
+async function handleSubmit(
+  event: FormSubmitEvent<z.output<typeof SignupSchema>>
+) {
   try {
     isLoading.value = true;
     await useFetch("/api/auth/signup", {
       method: "POST",
-      body: formState.value,
+      body: event.data,
+    });
+    useToast().add({
+      title: "Account created",
+      description:
+        "Your account has been created successfully, Redirecting you to the sign in page",
+    });
+    await useRouter().push({
+      name: "auth-signin",
     });
   } catch (error) {
     console.log(error);
@@ -28,7 +43,7 @@ async function handleSubmit() {
       <NuxtLink to="/auth/signin" class="text-primary-500"> Sign In </NuxtLink>
     </template>
 
-    <UForm :state="formState" @submit="handleSubmit">
+    <UForm :state="formState" :schema="SignupSchema" @submit="handleSubmit">
       <UFormGroup class="mb-4" name="name" label="Name">
         <UInput v-model="formState.name" type="text" placeholder="John Doe" />
       </UFormGroup>
@@ -43,6 +58,13 @@ async function handleSubmit() {
       <UFormGroup class="mb-4" name="password" label="Password">
         <UInput
           v-model="formState.password"
+          type="password"
+          placeholder="********"
+        />
+      </UFormGroup>
+      <UFormGroup class="mb-4" name="passwordConfirm" label="Confirm Password">
+        <UInput
+          v-model="formState.passwordConfirm"
           type="password"
           placeholder="********"
         />

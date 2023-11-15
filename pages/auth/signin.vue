@@ -1,27 +1,7 @@
 <script lang="ts" setup>
-const formState = ref({
-  email: "",
-  password: "",
-});
-const isLoading = ref(false);
+import { useSignin } from "~/composables/useSignin";
 
-const router = useRouter();
-const { signIn } = useAuth();
-
-async function handleSubmit() {
-  try {
-    isLoading.value = true;
-    await signIn("credentials", {
-      callbackUrl: "/",
-      email: formState.value.email,
-      password: formState.value.password,
-    });
-    router.push("/");
-  } catch (e) {
-  } finally {
-    isLoading.value = false;
-  }
-}
+const { formState, isLoading, validationSchema, handleSubmit } = useSignin();
 </script>
 <template>
   <WrapperAuth title="Sign In to your account">
@@ -30,7 +10,7 @@ async function handleSubmit() {
       <NuxtLink to="/auth/signup" class="text-primary-500"> Sign Up </NuxtLink>
     </template>
 
-    <UForm :state="formState" @submit="handleSubmit">
+    <UForm :state="formState" :schema="validationSchema" @submit="handleSubmit">
       <UFormGroup class="mb-4" name="email" label="Email">
         <UInput
           v-model="formState.email"

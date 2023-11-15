@@ -12,19 +12,6 @@ export default NuxtAuthHandler({
     CredentialsProvider.default({
       name: "credentials",
       origin: process.env.AUTH_ORIGIN,
-
-      credentials: {
-        email: {
-          label: "email",
-          type: "email",
-          placeholder: "(hint: jsmith)",
-        },
-        password: {
-          label: "Password",
-          type: "password",
-          placeholder: "(hint: hunter2)",
-        },
-      },
       async authorize(credential: { email: string; password: string }) {
         // Authorize the user
 
@@ -44,6 +31,10 @@ export default NuxtAuthHandler({
       },
     }),
   ],
+
+  session: {
+    strategy: "jwt",
+  },
 
   callbacks: {
     async jwt({ token, user }) {
