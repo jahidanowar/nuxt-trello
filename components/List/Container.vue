@@ -32,7 +32,9 @@ async function handleSort(e: any) {
       class="flex h-[80vh] overflow-x-auto gap-4 pb-2 list"
     >
       <template #item="{ element }">
-        <ListItem :list="element" :board-id="boardId" />
+        <div class="flex">
+          <ListItem :list="element" :board-id="boardId" />
+        </div>
       </template>
     </draggable>
   </div>
