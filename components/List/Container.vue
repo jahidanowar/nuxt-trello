@@ -38,13 +38,12 @@ async function handleSort(e: any) {
   </div>
 </template>
 
-<style scoped>
+<style>
 .ghost-board {
-  opacity: 0.9;
-  backdrop-filter: blur(10px);
 }
 .ghost-board > div {
   @apply invisible;
+  opacity: 0.5;
 }
 
 .dragging-board {

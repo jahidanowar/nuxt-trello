@@ -3,7 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { User } from "~/server/models/User";
 
 export default NuxtAuthHandler({
-  secret: process.env.AUTH_SECRET,
+  secret: useRuntimeConfig().auth.secret,
   pages: {
     signIn: "/auth/signin",
   },
@@ -11,7 +11,7 @@ export default NuxtAuthHandler({
     // @ts-expect-error
     CredentialsProvider.default({
       name: "credentials",
-      origin: process.env.AUTH_ORIGIN,
+      origin: useRuntimeConfig().auth.origin,
       async authorize(credential: { email: string; password: string }) {
         // Authorize the user
 

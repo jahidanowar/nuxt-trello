@@ -19,7 +19,9 @@ const listActions = ref([
     {
       label: "Add card",
       icon: "i-heroicons-plus-circle",
-      click: () => {},
+      click: () => {
+        showCreateCard.value = true;
+      },
     },
     {
       label: "Delete list",
