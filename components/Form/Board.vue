@@ -85,7 +85,7 @@ watchEffect(() => {
     </UFormGroup>
 
     <UButton type="submit" color="primary" block :loading="isLoading">
-      Create board
+      {{ type === "create" ? "Create board" : "Update board" }}
     </UButton>
   </UForm>
 </template>

@@ -77,9 +77,9 @@ async function handleSubmit(e: FormSubmitEvent<z.output<typeof ListSchema>>) {
     <UFormGroup name="name" label="List Name" class="mb-4">
       <UInput type="text" name="name" v-model="formState.name" />
     </UFormGroup>
-    <UButton type="submit" :loading="isLoading" color="primary" block
-      >Create List</UButton
-    >
+    <UButton type="submit" :loading="isLoading" color="primary" block>
+      {{ type === "create" ? "Create list" : "Update list" }}
+    </UButton>
   </UForm>
 </template>
 

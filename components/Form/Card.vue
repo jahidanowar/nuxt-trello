@@ -75,7 +75,9 @@ watchEffect(() => {
       <UTextarea type="text" v-model="formState.description"></UTextarea>
     </UFormGroup>
 
-    <UButton type="submit" block :loading="isLoading"> Create Card</UButton>
+    <UButton type="submit" block :loading="isLoading">
+      {{ type === "create" ? "Create card" : "Update card" }}
+    </UButton>
   </UForm>
 </template>
 
