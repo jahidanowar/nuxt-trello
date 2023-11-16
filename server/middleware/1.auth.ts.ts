@@ -3,7 +3,7 @@ import { getServerSession } from "#auth";
 export default defineEventHandler(async (event) => {
   const session = await getServerSession(event);
 
-  const protectedRoutes = ["/api/boards", "/api/lists"];
+  const protectedRoutes = ["/api/boards", "/api/lists", "/api/users"];
 
   const isProtectedRoute = protectedRoutes.some((route) =>
     getRequestURL(event).pathname.startsWith(route)

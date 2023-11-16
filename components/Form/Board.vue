@@ -39,12 +39,23 @@ async function handleSubmit(
       return;
     }
 
-    const newBoard = await useFetch("/api/boards", {
+    const { data, error } = await useFetch("/api/boards", {
       method: "POST",
       body: event.data,
       watch: false,
     });
-    porps.onCreate?.(newBoard);
+
+    if (error.value) {
+      if (error.value.statusCode === 403) {
+        useSubscription().showSubscriptionModal({
+          title: "Multiple boards is a Premium Feature",
+          description:
+            "You can create only one board in free plan. Please upgrade to premium to create more boards.",
+        });
+      }
+    }
+
+    porps.onCreate?.(data);
   } catch (e) {
   } finally {
     isLoading.value = false;

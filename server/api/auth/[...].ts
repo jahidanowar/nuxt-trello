@@ -2,6 +2,12 @@ import { NuxtAuthHandler } from "#auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { User } from "~/server/models/User";
 
+async function getUser(id: string) {
+  const user = await User.findById(id);
+
+  return user?.toJSON();
+}
+
 export default NuxtAuthHandler({
   secret: useRuntimeConfig().auth.secret,
   pages: {
@@ -49,9 +55,13 @@ export default NuxtAuthHandler({
     },
 
     async session({ session, token }) {
+      // @ts-expect-error
+      const refreshedUser = await getUser(token._id);
+
       session.user = {
         ...token,
         ...session.user,
+        ...refreshedUser,
       };
 
       return session;

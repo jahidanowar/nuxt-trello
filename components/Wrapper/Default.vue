@@ -1,5 +1,8 @@
 <script lang="ts" setup>
+import type { UserDocument } from "~/server/models/User";
 const { data, signOut } = useAuth();
+
+const { showSubscriptionModal, accessPortal } = useSubscription();
 
 const dropdownItems = ref([
   [
@@ -13,7 +16,7 @@ const dropdownItems = ref([
     {
       label: "Billing",
       icon: "i-heroicons-credit-card",
-      click: () => {},
+      click: accessPortal,
     },
   ],
   [
@@ -38,12 +41,19 @@ async function handleSignout() {
 
           <div class="inline-flex justify-end gap-4 items-center">
             <slot name="actions"></slot>
+
+            <UButton
+              v-if="!(data?.user as UserDocument)?.hasActiveSubscription"
+              variant="outline"
+              color="amber"
+              @click="showSubscriptionModal"
+            >
+              <UIcon name="i-heroicons-star" />
+            </UButton>
+
             <ColorSwitcher />
             <UDropdown :items="dropdownItems">
-              <UAvatar
-                size="xs"
-                src="https://avatars.githubusercontent.com/u/29729380?v=4"
-              />
+              <UIcon name="i-heroicons-user-circle" class="w-6 h-6" />
 
               <template #profile>
                 <div class="text-left">

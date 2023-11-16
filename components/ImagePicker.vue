@@ -8,7 +8,7 @@ defineProps<{
 }>();
 
 const { data } = await useFetch<any>(
-  `https://pixabay.com/api/?key=${pixabayApiKey}&q=background&image_type=photo&per_page=20`
+  `https://pixabay.com/api/?key=${pixabayApiKey}&image_type=photo&orientation=horizontal&per_page=32`
 );
 
 defineEmits<{

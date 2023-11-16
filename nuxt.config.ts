@@ -13,8 +13,12 @@ export default defineNuxtConfig({
       origin: process.env.AUTH_ORIGIN,
       secret: process.env.AUTH_SECRET,
     },
+    stripeSecretKey: process.env.STRIPE_SECRET_KEY,
+    stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
     public: {
       pixabayApiKey: process.env.PIXABAY_API_KEY,
+      priceId: process.env.STRIPE_PRICE_ID,
+      stripePublicKey: process.env.STRIPE_PUBLIC_KEY,
     },
   },
 
