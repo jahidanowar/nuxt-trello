@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
   Validator.validateSchema(ListSchema.partial(), body);
 
   const updatedLists = await List.findOneAndUpdate(
-    { listId, owner: user._id },
+    { _id: listId, owner: user._id },
     {
       $set: body,
     },

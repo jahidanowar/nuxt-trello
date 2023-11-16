@@ -29,16 +29,16 @@ async function handleSort(e: any) {
       :scroll-sensitivity="500"
       :force-fallback="true"
       @sort="handleSort"
-      class="flex h-[80vh] overflow-x-auto gap-4 pb-2"
+      class="flex h-[80vh] overflow-x-auto gap-4 pb-2 list"
     >
       <template #item="{ element }">
-        <ListItem :element="element" :board-id="boardId" />
+        <ListItem :list="element" :board-id="boardId" />
       </template>
     </draggable>
   </div>
 </template>
 
-<style>
+<style scoped>
 .ghost-board {
   opacity: 0.9;
   backdrop-filter: blur(10px);
@@ -48,11 +48,10 @@ async function handleSort(e: any) {
 }
 
 .dragging-board {
-  @apply shadow-2xl transform rotate-2;
+  @apply shadow-2xl transform rotate-2 cursor-grabbing;
 }
 
-.sortable-chosen {
-  background: white;
+.list .sortable-chosen {
   overflow: hidden;
   opacity: 1 !important;
 }

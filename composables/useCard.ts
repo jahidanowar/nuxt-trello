@@ -1,9 +1,13 @@
-export const useList = () => {
-  async function destroy(id: string, onDestroy?: () => void) {
+export const useCard = () => {
+  async function destroy(
+    listId: string,
+    cardId: string,
+    onDestroy?: () => void
+  ) {
     try {
       useToast().add({
-        title: "Delete list",
-        description: "Are you sure you want to delete this list?",
+        title: "Delete card",
+        description: "Are you sure you want to delete this card?",
         actions: [
           {
             label: "Canel",
@@ -13,7 +17,7 @@ export const useList = () => {
             label: "Yes",
             color: "red",
             click: async () => {
-              await useFetch(`/api/lists/${id}`, {
+              await useFetch(`/api/lists/${listId}/cards/${cardId}`, {
                 method: "DELETE",
               });
               onDestroy?.();
@@ -31,8 +35,12 @@ export const useList = () => {
     }
   }
 
-  async function update(id: string, data: Record<string, unknown>) {
-    await useFetch(`/api/lists/${id}`, {
+  async function update(
+    listId: string,
+    cardId: string,
+    data: Record<string, unknown>
+  ) {
+    await useFetch(`/api/lists/${listId}/cards/${cardId}`, {
       body: data,
       method: "PUT",
       watch: false,

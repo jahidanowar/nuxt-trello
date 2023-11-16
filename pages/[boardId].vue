@@ -32,7 +32,7 @@ const lists = computed(() => data.value?.lists as ListDocument[]);
 <template>
   <WrapperDefault
     v-if="data"
-    class="lg:h-screen"
+    class="h-screen"
     :style="{
       backgroundImage: `url(${coverImage})`,
       backgroundSize: 'cover',
@@ -43,7 +43,9 @@ const lists = computed(() => data.value?.lists as ListDocument[]);
       <UButton @click="showCreateList = true" size="xs">Create a list</UButton>
     </template>
 
-    <h1 class="tex-3xl font-semibold mb-4">{{ data!.name }}</h1>
+    <h1 class="tex-3xl font-semibold mb-4 inline-block">
+      {{ data!.name }}
+    </h1>
 
     <ListContainer :lists="lists" :board-id="(boardId as string)" />
 

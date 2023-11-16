@@ -5,7 +5,7 @@ import { Card } from "~/server/models/Card";
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
   const user = event.context.user;
-  const listId = getRouterParam(event, "listId");
+  // const listId = getRouterParam(event, "listId");
   const cardId = getRouterParam(event, "cardId");
 
   Validator.validateSchema(CardSchema.partial(), body);
@@ -13,7 +13,6 @@ export default defineEventHandler(async (event) => {
   const updatedCard = await Card.findOneAndUpdate(
     {
       _id: cardId,
-      list: listId,
       owner: user._id,
     },
     body,
