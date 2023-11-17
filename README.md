@@ -1,75 +1,133 @@
-# Nuxt 3 Minimal Starter
+# Nuxtrello
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Nuxtrello is a full-stack web application inspired by Trello. This project is built using Nuxt 3, MongoDB, and Tailwind CSS, focusing on creating an efficient, user-friendly task management and organization tool.
 
-## Setup
+## Topics
 
-Make sure to install the dependencies:
+### Introduction
 
-```bash
-# npm
-npm install
+- Overview
+- Project Demo
+- Project Data model
 
-# pnpm
-pnpm install
+### Project Setup
 
-# yarn
-yarn install
+- Installing Nuxt 3
+- Adding Required Dependencies
+- Connecting to MongoDB
+- Creating basic layout
 
-# bun
-bun install
+### User Authentication
+
+- Creating User Model
+- Creating User API Routes
+- Creating User Authentication API Routes
+- Creating User Authentication Pages
+
+### Boards Resource
+
+- Creating Board Model
+- Creating Board API Routes
+- Creating Board Pages
+- Creating Image Picker Component
+
+### Lists Resource
+
+- Creating List Model
+- Creating List API Routes
+- Creating List Pages
+- Adding List Editor
+- Adding Drag and Drop Functionality
+
+### Card Resource
+
+- Creating Card Model
+- Creating Card API Routes
+- Creating Card Pages
+- Adding Rich Editor
+- Adding Drag and Drop Functionality
+
+### SaaS Features
+
+- Modify User Model for SaaS
+- Integrate Stripe
+- Create essential SaaS API endpoints
+- Create `useSubscription` composable
+- Design payment modals
+
+<hr>
+
+## Features
+
+- **Drag and Drop Interface**: Easy-to-use, intuitive interface for managing tasks.
+- **User Authentication**: Secure user authentication and authorization using JWT.
+- **SAAS Features**: Create and manage multiple boards, lists, and tasks in premium plan. SaaS feature is implemented using Stripe.
+- **Responsive Design**: Fully responsive web design for a seamless experience across different devices.
+- **Advanced Topics**: Covers advanced concepts like state management, API integration, and more.
+
+## Getting Started
+
+### Packages Used
+
+```
+bcryptjs stripe vuedraggable@next next-auth@4.21.1 @vueup/vue-quill
 ```
 
-## Development Server
+#### Dev Dependencies
 
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
+```
+@sidebase/nuxt-auth @nuxt/ui @sidebase/nuxt-auth nuxt-server-utils mongoose zod
 ```
 
-## Production
+### Prerequisites
 
-Build the application for production:
+- Basic of Javascript
+- MongoDB
 
-```bash
-# npm
-npm run build
+### Installation
 
-# pnpm
-pnpm run build
+1. Clone the repository:
+   ```
+   git clone https://github.com/jahidanowar/nuxt-trello.git
+   ```
+2. Navigate to the project directory:
+   ```
+   cd nuxt-trello
+   ```
+3. Install dependencies:
+   ```
+   pnpm install
+   ```
+4. Start the development server:
+   ```
+   pnpm run dev
+   ```
 
-# yarn
-yarn build
+## Usage
 
-# bun
-bun run build
-```
+After starting the development server, the application will be available at `http://localhost:3000`.
 
-Locally preview production build:
+## Contributing
 
-```bash
-# npm
-npm run preview
+Contributions are welcome! Please read our contributing guidelines for details on how to submit pull requests to the project.
 
-# pnpm
-pnpm run preview
+## Deployment
 
-# yarn
-yarn preview
+Vercel deployment is already covered in the video.
 
-# bun
-bun run preview
-```
+For digital ocean deployment, follow the [Digital Ocean Deployment Guide](https://www.youtube.com/watch?v=hANbHC90xug&ab_channel=JahidAnowar).
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Contributions & Issues
+
+Please feel free to raise an issue for suggestions or bugs. You can ,essage me on twitter [@jahidDev](https://twitter.com/jahidDev).
+
+## License
+
+> _The project is released under the WTFPL2 [Do What Ever You Want To Public License](LICENSE)._
+
+<hr>
+
+> [jahid.dev](https://jahid.dev) &nbsp;&middot;&nbsp;
+> YouTube [@jahidanowar](https://jahid.dev/go/yt) &nbsp;&middot;&nbsp;
+> Twitter [@jahidDev](https://jahid.dev/go/tt) &nbsp;&middot;&nbsp;
+> Instagram [@jahidDev](https://jahid.dev/go/ig)
