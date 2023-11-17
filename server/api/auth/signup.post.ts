@@ -27,7 +27,5 @@ export default defineEventHandler(async (event) => {
 
   await board.save();
 
-  console.log({ board });
-
   return user;
 });
