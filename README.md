@@ -55,6 +55,10 @@ Nuxtrello is a full-stack web application inspired by Trello. This project is bu
 - Create `useSubscription` composable
 - Design payment modals
 
+### Deployment
+
+- Deploying to Vercel/Netlify/Digital Ocean
+
 <hr>
 
 ## Features
