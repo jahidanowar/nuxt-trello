@@ -41,11 +41,11 @@ async function handleSort(e: any) {
 </template>
 
 <style>
-.ghost-board {
-}
 .ghost-board > div {
+  @apply opacity-50;
+}
+.ghost-board > div > div {
   @apply invisible;
-  opacity: 0.5;
 }
 
 .dragging-board {

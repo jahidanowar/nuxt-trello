@@ -11,6 +11,8 @@ export default defineEventHandler(async (event) => {
 
   const boardCount = await Board.countDocuments({ owner: user._id });
 
+  console.log("boardCount", boardCount);
+
   if (boardCount >= 1 && !user.hasActiveSubscription) {
     throw createError({
       statusCode: 403,

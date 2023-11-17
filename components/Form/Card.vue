@@ -58,6 +58,27 @@ async function handleSubmit(e: FormSubmitEvent<z.output<typeof CardSchema>>) {
   }
 }
 
+async function handleDelete() {
+  try {
+    isLoading.value = true;
+    await useFetch(
+      `/api/lists/${props.listId}/cards/${props.initialData?._id}`,
+      {
+        method: "DELETE",
+        watch: false,
+      }
+    );
+    props.onUpdate?.();
+  } catch (e: any) {
+    useToast().add({
+      title: "Error",
+      description: e.message || "Something went wrong",
+    });
+  } finally {
+    isLoading.value = false;
+  }
+}
+
 watchEffect(() => {
   if (props.type === "update" && props.initialData) {
     formState.title = props.initialData.title;
@@ -68,17 +89,43 @@ watchEffect(() => {
 <template>
   <UForm :state="formState" :schema="CardSchema" @submit="handleSubmit">
     <UFormGroup class="mb-4" name="title" label="Title">
-      <UInput type="text" v-model="formState.title" />
+      <UInput type="text" v-model="formState.title" autofocus />
     </UFormGroup>
 
     <UFormGroup class="mb-4" name="description" label="Description">
-      <UTextarea type="text" v-model="formState.description"></UTextarea>
+      <ClientOnly>
+        <QuillEditor
+          v-model:content="formState.description"
+          theme="snow"
+          toolbar="minimal"
+          content-type="html"
+        />
+      </ClientOnly>
     </UFormGroup>
 
-    <UButton type="submit" block :loading="isLoading">
-      {{ type === "create" ? "Create card" : "Update card" }}
-    </UButton>
+    <div class="flex gap-4 mt-4 justify-end">
+      <UButton
+        v-if="type === 'update'"
+        type="button"
+        :loading="isLoading"
+        color="red"
+        variant="soft"
+        icon="i-heroicons-trash"
+        @click="handleDelete"
+      >
+      </UButton>
+      <UButton type="submit" :loading="isLoading" :block="type === 'create'">
+        {{ type === "create" ? "Create card" : "Update card" }}
+      </UButton>
+    </div>
   </UForm>
 </template>
 
-<style></style>
+<style>
+.ql-container {
+  @apply h-32 rounded-b-lg shadow;
+}
+.ql-toolbar {
+  @apply rounded-t-lg;
+}
+</style>

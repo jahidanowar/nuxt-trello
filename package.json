@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@stripe/stripe-js": "^2.1.11",
+    "@vueup/vue-quill": "^1.2.0",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "next-auth": "4.21.1",

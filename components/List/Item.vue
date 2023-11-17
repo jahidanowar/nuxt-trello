@@ -58,6 +58,17 @@ async function handleCardChange(e: any) {
     });
   }
 }
+
+function handleShowCard(card: CardDocument) {
+  selectedCard.value = card;
+  showCreateCard.value = true;
+}
+
+watch(showCreateCard, (value) => {
+  if (!value) {
+    selectedCard.value = undefined;
+  }
+});
 </script>
 <template>
   <div
@@ -98,12 +109,8 @@ async function handleCardChange(e: any) {
       @change="handleCardChange"
     >
       <template #item="{ element }">
-        <div
-          class="p-2 border rounded-lg text-sm bg-white dark:bg-gray-800 dark:border-gray-700 cursor-grab"
-        >
-          <div>
-            {{ element.title }}
-          </div>
+        <div>
+          <ListCard :card="element" @click="() => handleShowCard(element)" />
         </div>
       </template>
     </draggable>
@@ -128,7 +135,7 @@ async function handleCardChange(e: any) {
     <Teleport to="body">
       <UModal v-model="showCreateCard">
         <SlideoverHeader
-          title="Create a card"
+          :title="selectedCard ? 'Update card' : 'Create a card'"
           :on-click="() => (showCreateCard = false)"
         ></SlideoverHeader>
         <div class="p-4">
@@ -142,6 +149,13 @@ async function handleCardChange(e: any) {
                 refresh();
               }
             "
+            :on-update="
+              () => {
+                showCreateCard = false;
+                selectedCard = undefined;
+                refresh();
+              }
+            "
           ></FormCard>
         </div>
       </UModal>
@@ -151,7 +165,7 @@ async function handleCardChange(e: any) {
 
 <style scoped>
 .ghost-card {
-  @apply !bg-gray-100 dark:!bg-gray-700;
+  @apply !bg-gray-100 dark:!bg-gray-700 rounded-lg;
 }
 .ghost-card > div {
   @apply invisible;
