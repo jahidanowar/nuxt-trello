@@ -28,6 +28,10 @@ watchEffect(() => {
     formState.name = props.initialData.name;
     formState.board = props.initialData.board;
   }
+
+  if (props.type === "create") {
+    formState.name = undefined;
+  }
 });
 
 async function handleSubmit(e: FormSubmitEvent<z.output<typeof ListSchema>>) {

@@ -84,6 +84,11 @@ watchEffect(() => {
     formState.title = props.initialData.title;
     formState.description = props.initialData.description;
   }
+
+  if (props.type === "create") {
+    formState.title = undefined;
+    formState.description = undefined;
+  }
 });
 </script>
 <template>

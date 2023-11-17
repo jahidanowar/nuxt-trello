@@ -67,6 +67,11 @@ watchEffect(() => {
     formState.name = porps.initialData.name;
     formState.coverImage = porps.initialData.coverImage;
   }
+
+  if (porps.type === "create") {
+    formState.name = undefined;
+    formState.coverImage = undefined;
+  }
 });
 </script>
 <template>

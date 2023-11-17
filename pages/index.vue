@@ -37,7 +37,7 @@ async function handleEdit(board: BoardDocument) {
     <!-- Sidesheet  -->
     <USlideover v-model="showCreateBoard">
       <SlideoverHeader
-        title="Create board"
+        :title="selectedBoard ? 'Update board' : 'Create board'"
         :on-click="() => (showCreateBoard = false)"
       ></SlideoverHeader>
 
