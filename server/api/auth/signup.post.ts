@@ -12,8 +12,9 @@ export default defineEventHandler(async (event) => {
 
   // Create a board for the user
   const board = await Board.create({
-    title: "Main Board",
+    name: "Main Board",
     owner: user._id,
+    coverImage: "https://picsum.photos/seed/picsum/1200/800",
   });
 
   const list = await List.create({
@@ -25,6 +26,8 @@ export default defineEventHandler(async (event) => {
   board.lists.push(list._id);
 
   await board.save();
+
+  console.log({ board });
 
   return user;
 });
