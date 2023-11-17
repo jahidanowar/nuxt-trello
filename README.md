@@ -1,4 +1,4 @@
-# Nuxtrello
+# Nuxt Trello SaaS (nrello)
 
 Nuxtrello is a full-stack web application inspired by Trello. This project is built using Nuxt 3, MongoDB, and Tailwind CSS, focusing on creating an efficient, user-friendly task management and organization tool.
 
