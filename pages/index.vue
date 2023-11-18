@@ -23,6 +23,12 @@ async function handleEdit(board: BoardDocument) {
   selectedBoard.value = board;
   showCreateBoard.value = true;
 }
+
+watchEffect(() => {
+  if (!showCreateBoard.value) {
+    selectedBoard.value = undefined;
+  }
+});
 </script>
 <template>
   <WrapperDefault>
